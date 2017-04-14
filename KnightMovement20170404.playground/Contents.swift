@@ -1,5 +1,3 @@
-import UIKit
-
 import Foundation
 
 
@@ -23,7 +21,10 @@ struct Location: Hashable {
     }
 }
 
+var allowedMoves: Set<Location> = []
+
 func possibleKnightPosition(pieceLocation: Location) -> Set<Location>? {
+    
     let knightMoves: Set<Location> = [
         Location(x: pieceLocation.x + 1, y: pieceLocation.y + 2),
         Location(x: pieceLocation.x - 1, y: pieceLocation.y + 2),
@@ -36,13 +37,11 @@ func possibleKnightPosition(pieceLocation: Location) -> Set<Location>? {
     ]
     
     for move in knightMoves {
-        if (move.x >= 1 && move.x <= 7) || (move.y >= 1 && move.y <= 7) {
-            return knightMoves
-        } else {
-            return nil
+        if (move.x >= 0 && move.x <= 7) || (move.y >= 0 && move.y <= 7) {
+            allowedMoves.insert(move)
         }
     }
-    return knightMoves
+    return allowedMoves
 }
 
 func possibleRookPosition(pieceLocation: Location) -> Set<Location>? {
@@ -78,13 +77,11 @@ func possibleRookPosition(pieceLocation: Location) -> Set<Location>? {
     ]
     
     for move in rookMoves {
-        if (move.x > 1 && move.x < 7) || (move.y > 1 && move.y < 7) || (move.x < -1 && move.x > -7) || (move.y < -1 && move.y > -7) {
-            return rookMoves
-        } else {
-            return nil
+        if (move.x >= 1 && move.x <= 7) || (move.y >= 1 && move.y <= 7) || (move.x <= -1 && move.x >= -7) || (move.y <= -1 && move.y >= -7) {
+            allowedMoves.insert(move)
         }
     }
-    return rookMoves
+    return allowedMoves
 }
 
 print(possibleKnightPosition(pieceLocation: Location(x: 0, y: 0))!)
